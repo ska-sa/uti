@@ -1,0 +1,12 @@
+#!/bin/bash
+####### User to edit these accordingly ######
+export MATLAB_PATH=/mnt/secondary/rhel_root/opt/MATLAB_R2012b
+PLATFORM=lin64
+export XILINX_PATH=/mnt/secondary/rhel_root/opt/Xilinx/14.3/ISE_DS
+export MLIB_DEVEL_PATH=/home/mlib_git_devel
+#############################################
+source $XILINX_PATH/settings64.sh
+export PATH=${PATH}:${XILINX}/ISE/bin/${PLATFORM}:${XILINX_PATH}/ISE/sysgen/bin/${PLATFORM}
+export XPS_BASE_PATH=$MLIB_DEVEL_PATH/xps_base
+export MATLAB=$MATLAB_PATH
+$MATLAB/bin/matlab
