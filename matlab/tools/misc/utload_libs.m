@@ -30,6 +30,9 @@
   
 function return_code = utload_libs(varargin)
 
+log_group = 'utload_libs_debug';
+utlog('entering', {log_group, 'trace'});
+
 defaults = { 'libraries', {'casper_library_ffts', 'casper_library_misc'} }
 
 libraries = utget_var('libraries', 'defaults', defaults, varargin{:});
@@ -39,12 +42,13 @@ return_code = -1;
 for lib_idx = 1:length(libraries),
   lib_name = libraries(lib_idx);
   if exist(lib_name, 'file') ~= 4,
-      utlog(['Library ', lib_name, ' not accessible. Aborting...'],'error');
+      utlog(['Library ', lib_name, ' not accessible. Aborting...'],{'error', log_group});
   else
       warning('off', 'Simulink:SL_LoadMdlParameterizedLink')
       load_system(lib_name);
-      utlog([lib_name, ' loaded'],'trace');
+      utlog([lib_name, ' loaded'], {'trace', log_group});
       return_code = 0;
   end
 end
 
+utlog('exiting', {log_group, 'trace'});

@@ -28,8 +28,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function[result] = utcmp(a, b)
-
 result = -1;
+log_group = 'utcmp_debug';
+utlog('entering', {'trace', log_group}); 
 
 %we can't compare variables of different types
 if ~strcmp(class(a), class(b)),
@@ -47,7 +48,7 @@ if strcmp(class(a), 'double'),
   else
     result = isempty(~find(a ~= b));
   end
-  utlog(['doubles found: a = ',num2str(a),' b = ',num2str(b),' result = ',num2str(result)],{'utcmp_debug'});
+  utlog(['doubles found: a = ',num2str(a),' b = ',num2str(b),' result = ',num2str(result)],{log_group});
   return;
 
 %if string
@@ -62,11 +63,11 @@ elseif strcmp(class(a), 'char'),
     else
       result = 0;
     end
-    utlog(['string containing doubles: a = ',num2str(a_num),' b = ',num2str(b_num),' result = ',num2str(result)],{'utcmp_debug'});
+    utlog(['string containing doubles: a = ',num2str(a_num),' b = ',num2str(b_num),' result = ',num2str(result)],{log_group});
     return;
   else, %otherwise compare as strings
     result = strcmp(a,b);
-    utlog(['string: a = ',a,' b = ',b,' result = ',num2str(result)],{'utcmp_debug'});
+    utlog(['string: a = ',a,' b = ',b,' result = ',num2str(result)],{log_group});
   end
 
 % %if cell array
@@ -99,5 +100,7 @@ elseif strcmp(class(a), 'char'),
 
 else,
   disp(['Do not know how to compare ',class(a),' with ',class(b),]);
-  utlog(['Do not know how to compare ',class(a),' with ',class(b)],{'error','utcmp_debug'});
+  utlog(['Do not know how to compare ',class(a),' with ',class(b)],{'error', log_group});
 end
+
+utlog('exiting', {'trace', log_group}); 

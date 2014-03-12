@@ -22,13 +22,15 @@
 
 function[data, en, result] = utextract(varargin)
 data = []; result = -1;
-utlog(['entering utextract'],{'trace', 'utextract_debug'});
+log_group = 'utextract_debug';
+
+utlog(['entering'],{'trace', log_group});
 
 defaults = { ...
   'data', [0:15]', ...
   'mux', 4, ...
   'sync', [0;1;1;0], ...
-  'en', [1;1;1;1] ...
+  'en', 1, ...
   'fold_len', inf, ...
 }; %defaults
 
@@ -40,11 +42,11 @@ args = {varargin{:}, 'defaults', defaults};
 [fold_len, temp, results(5)]  = utpar_get({args, 'fold_len'});
 
 if find(results(1) ~= 0),
-  utlog(['error getting data'],{'error', 'utextract_debug'});
+  utlog(['error getting data'],{'error', log_group});
   return;
 end
 if find(results(4) ~= 0),
-  utlog(['error in mux factor supplied'],{'error', 'utextract_debug'});
+  utlog(['error in mux factor supplied'],{'error', log_group});
   return;
 end
 
@@ -59,46 +61,46 @@ if lsync > 1,
   sync1 = find(sync==1);
 
   if isempty(sync1),
-    utlog(['did not find syncs, using all data'],{'warning', 'utextract_debug'});
+    utlog(['did not find syncs, using all data'],{'warning', log_group});
   end 
   
   if length(sync1) > 1,
-    utlog(['multiple syncs found, using last'],{'warning', 'utextract_debug'});
+    utlog(['multiple syncs found, using last'],{'warning', log_group});
   end 
 
   sync1 = sync1(length(sync1));
   
-  utlog(['sync found at position ',num2str(sync1)],{'utextract_debug'});
-  utlog(['removing en after ',num2str(sync1)],{'utextract_debug'});
+  utlog(['sync found at position ',num2str(sync1)],{log_group});
+  utlog(['removing en after ',num2str(sync1)],{log_group});
   if len > 1,
     en = en(sync1+1:len,:);
   end; %if
 
-  utlog(['removing data after ',num2str(sync1*mux)],{'utextract_debug'});
+  utlog(['removing data after ',num2str(sync1*mux)],{log_group});
   data = data(sync1*mux+1:ldata,:);
 end %if lsync
 
 ldata = length(data);
 %en processing
 if len > 1, %fluff if original length was greater than 1
-  utlog(['fluffing en'],{'utextract_debug'});
+  utlog(['fluffing en'],{log_group});
   len = length(en);
 
   en = repmat(en, 1, mux)';
   en = reshape(en, len*mux, 1);
   en = [en; zeros(ldata-(mux*len),1)];
 
-  utlog(['masking data'],{'utextract_debug'});
+  utlog(['masking data'],{log_group});
   data = data(find(en == 1));
 end;
 
 %fold data into columns if required
 if fold_len ~= inf,
   folds = floor(length(data)/fold_len); 
-  utlog([num2str(folds),' folds found'],{'utextract_debug'});
+  utlog([num2str(folds),' folds found'],{log_group});
   data = data(1:folds*fold_len);
   data = reshape(data, fold_len, folds);    
 end
 
-utlog(['exiting utextract'],{'trace', 'utextract_debug'});
+utlog(['exiting'],{'trace', log_group});
 result = 0;

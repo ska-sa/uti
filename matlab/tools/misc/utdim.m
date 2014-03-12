@@ -29,6 +29,8 @@
 
 function [width, depth] = utdim(input)
 
+log_group = 'utdim_debug';
+utlog('entering', {log_group, 'trace'});
 width = 0; depth = 0;
 if isempty(input),
   return;
@@ -48,3 +50,5 @@ for n = 1:length(input)
 end
 
 depth = depth + 1;
+
+utlog('exiting', {log_group, 'trace'});

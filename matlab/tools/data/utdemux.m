@@ -31,8 +31,9 @@
 
 function [data, result] = utdemux(varargin)
 data = {}; result = -1;
+log_group = 'utdemux_debug';
 
-utlog('entering utdemux',{'trace', 'utdemux_debug'});
+utlog('entering utdemux',{'trace', log_group});
 
 defaults = { ...
   'n_streams', 4, ...
@@ -45,21 +46,21 @@ args    = {varargin{:}, 'defaults', defaults};
 [complex, temp, results(2)]         = utpar_get({args, 'complex'});
 [din, temp, results(3)]             = utpar_get({args, 'din'});
 if ~isempty(find(results ~= 0)),
-  utlog(['error getting parameters'],{'error', 'utdemux_debug'});
+  utlog(['error getting parameters'],{'error', log_group});
   return;
 end
 
 %check for weird input data dimensions
 [rdin,cdin] = size(din);
-utlog(['din has size rows = ',num2str(rdin),' cols = ',num2str(cdin)],{'utdemux_debug'});
+utlog(['din has size rows = ',num2str(rdin),' cols = ',num2str(cdin)],{log_group});
 if rdin ~= 1 && cdin ~= 1,
-    utlog('number of rows or columns of input data must be 1',{'error', 'utdemux_debug'});
+    utlog('number of rows or columns of input data must be 1',{'error', log_group});
     return
 end
 
 %ensure data is a column vector
 if rdin == 1, 
-    utlog(['rotating din'],{'utdemux_debug'});
+    utlog(['rotating din'],{log_group});
     din = din';
     rdin = cdin;
     cdin = rdin; 
@@ -93,4 +94,4 @@ end %for
 
 result = 0;
 
-utlog('exiting utdemux',{'trace', 'utdemux_debug'});
+utlog('exiting utdemux',{'trace', log_group});

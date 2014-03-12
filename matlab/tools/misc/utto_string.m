@@ -22,6 +22,9 @@
 
 function[output, result] = utto_string(var)
 
+log_group = 'utto_string_debug';
+utlog('entering', {log_group, 'trace'});
+
 result = -1;
 output = '';
 if isempty(var),
@@ -47,6 +50,7 @@ elseif isa(var, 'char'),
   output = var;
   result = 0;
 else
-  utlog(['don''t know how to convert variable of class ',class(var),' to string'], {'error', 'utto_string_debug'});
+  utlog(['don''t know how to convert variable of class ',class(var),' to string'], {'error', log_group});
 end
 
+utlog('exiting', {log_group, 'trace'});
