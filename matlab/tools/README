@@ -20,16 +20,14 @@
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-README - this file. Readme for matlab/tools folder. Part of the uti toolset.
-misc - miscellaneous low level scripts.
-block - scripts to generate, manipulate and destroy generic blocks.
-data - scripts to pack and unpack simulation and simulated data.
-inport - scripts to erect and manipulate data for an inport block.
-outport - scripts to erect and manipulate data received through an outport block.
-model - scripts to erect and manipulate generic models.
-bbox - scripts to erect and manipulate specialist models called black boxes.
-par - scripts to manipulate parameter lists.
-sources - scripts for generating simulation data.
+README      - this file. Readme for matlab/tools folder. Part of the uti toolset.
+utblock-*   - scripts to generate, manipulate and destroy generic blocks.
+utdata_*    - scripts to pack and unpack simulation and simulated data.
+utinport_*  - scripts to erect and manipulate data for an inport block.
+utoutport_* - scripts to erect and manipulate data received through an outport block.
+utmodel_*   - scripts to erect and manipulate generic models.
+utbbox_*    - scripts to erect and manipulate specialist models called black boxes.
+utpar_*     - scripts to manipulate parameter lists.
 
 Andrew Martens
 Feb 2014

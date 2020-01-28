@@ -20,10 +20,10 @@
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Part of the uti toolset.
+Part of the uti toolset. Helper scripts to help generate various tests for
+CASPER library components.
 
 README - this file. README for matlab folder.
-casper - application helper scripts specific to the casper signal processing library.
 
 Andrew Martens
 3 Feb 2014
