@@ -20,9 +20,13 @@
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Part of the uti toolset.
+The uti (unit testing infrastructure) project is meant to provide
+a testing platform for (especially signal processing) firmware
+blocks. This is initially to be used with the CASPER Simulink 
+signal processing library but effort has been made to enable testing
+of libraries implemented in other platforms.
 
-README - this file. README for matlab folder.
+README - this file.
 apps - application or top-level scripts to accomplish specific tests of blocks or
   systems.
 libs - helper scripts for specific library blocksets.
