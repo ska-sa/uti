@@ -21,10 +21,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %function to compare basic results of matlab fft vs casper fft_wideband_real
-function[data, data_ref, result] = casper_vs_matlab_basic(varargin)
+function[data, data_ref, result] = casper_fft_wideband_real_vs_matlab_basic(varargin)
   clear all;
   
-  ut_debug_group = 'casper_vs_matlab_basic_debug';
+  ut_debug_group = 'casper_fft_wideband_real_vs_matlab_basic_debug';
   result = -1; 
   data = []; 
   data_ref = [];
