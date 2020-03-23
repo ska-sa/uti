@@ -31,8 +31,8 @@ function[data, result] = utdata_gen(varargin)
     'vec_len', 2^12, ...
   };
   args = {varargin{:}, 'defaults', defaults};
-  [sources, temp, results(1)]   = utpar_get({args, 'sources'});   % list of data sources 
-  [vec_len, temp, results(2)]    = utpar_get({args, 'vec_len'});    % length of final vector
+  [sources, temp, results(1)]   = utpar_get({args, 'sources'});    % list of data sources 
+  [vec_len, temp, results(2)]    = utpar_get({args, 'vec_len'});   % length of final vector
 
   if ~isempty(find(results ~= 0)),
     utlog('error getting parameters from varargin',{'error', ut_log_group});
@@ -136,15 +136,22 @@ function[data, result] = utdata_gen(varargin)
       utlog(['adding impulse at offset ',num2str(impulse_offset)], {ut_log_group});
       impulse = zeros(vec_len, 1);
       impulse(impulse_offset+1) = impulse_amplitude; 
+      size(impulse)
 
       if strcmp(impulse_type, 'periodic'),
-        periods = max(1, floor((vec_len-impulse_offset)/impulse_period));
+        impulse = zeros(impulse_period, 1);
+        impulse(impulse_offset+1) = impulse_amplitude; 
+	periods = max(1, floor(vec_len/impulse_period));
         utlog(['making ', num2str(periods), ' periods'], {ut_log_group});
         impulse = repmat(impulse, periods, 1);
+	impulse = impulse(1:vec_len,1);
+      else,
+        impulse = zeros(vec_len, 1);
+        impulse(impulse_offset+1) = impulse_amplitude; 
       end
+
       data                  = data + impulse;     
-      
- 
+
     else,
       utlog(['unrecognised source type ''', src_type, ''''], {'error', ut_log_group});
       error(['unrecognised source type ''', src_type, '''']);
