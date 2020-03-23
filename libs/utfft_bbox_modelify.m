@@ -56,6 +56,7 @@ if result ~= 0,
   return;
 end
 
+%construct a black box model from the result
 [model, result] = utbbox_modelify('name', name, 'bbox', bbox);
 if result ~= 0,
   utlog('error creating model from black box',{'error', log_group});
