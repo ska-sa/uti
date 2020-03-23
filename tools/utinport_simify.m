@@ -52,18 +52,29 @@ end
 
 %run through data inputs
 for input_index = 1:length(input_vars),
+  result = -1;
   input_datum = input_vars{input_index};
-  if length(input_datum) ~= 2,
-    utlog(['input ',num2str(input_index),' not name,value pair'],{'error', ut_log_group});
+
+  if ~isa(input_datum,'cell'),
+    utlog(['input ',num2str(input_index),' is not a cell array'],{'error', ut_log_group});
     return;
   end
 
-  input_name = input_datum{1};
-  if ~isa(input_name,'char'),
-    utlog(['input ',num2str(input_index),' name not a string'],{'error', ut_log_group});
+  if length(input_datum)>=1,
+    input_name = input_datum{1};
+    if ~isa(input_name,'char'),
+      utlog(['input ',num2str(input_index),' label not a string'],{'error', ut_log_group});
+      return;
+    end
+  else,
+    input_name = '';  
+  end
+
+  if length(input_datum) ~= 2,
+    utlog(['input ',num2str(input_index),':', input_name, 'not {label, value} pair'],{'error', ut_log_group});
     return;
   end
-  
+
   input_vals = input_datum{2};
   if ~isa(input_vals,'double'),
     utlog(['input ',input_name,' vals not doubles'],{'error', ut_log_group});
