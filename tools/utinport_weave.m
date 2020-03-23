@@ -135,7 +135,7 @@ for port_index = 1:len_ports,
         utlog(['adding ',var_name],{log_group});
 
         %add From Workspace 
-        fw_src = ['built-in/From Workspace'];
+        fw_src = ['built-in/FromWorkspace'];
         fw_name = [var_name, '_fw'];
         fw = add_block(fw_src, [system, '/', fw_name], ...
           'VariableName', var_name, ...
