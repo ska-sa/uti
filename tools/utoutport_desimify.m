@@ -20,7 +20,7 @@
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [dout, results] = utoutport_desimify(varargin)
+function [dout, result] = utoutport_desimify(varargin)
 dout = {}; result = -1;
 log_group = 'utoutport_desimify_debug';
 utlog('entering utoutport_desimify',{'trace', log_group});
@@ -124,5 +124,6 @@ for port_index = 1:length(ports),
 
 end %for port_index
 
-utlog('exiting utoutport_desimify',{'trace', log_group});
 result = 0;
+utlog('exiting utoutport_desimify',{'trace', log_group});
+
