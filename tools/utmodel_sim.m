@@ -122,17 +122,12 @@ for var_index = 1:var_len,
 end
 
 sim_time = floor(sim_time);
-utlog(['simulating for ',num2str(sim_time),' samples ...'], {log_group});
-
-oldopts = simget(name);
-sim_options = { ...
-  'DstWorkspace', 'base', ...
-%  'Solver', 'FixedStepDiscrete', ... 
-};
+utlog(['simulating for ',num2str(sim_time),' ticks ...'], {log_group});
 
 %TODO make solver type explicit instead of disabling warning
 %(currently causes error for some reason)
 warning off Simulink:Engine:UsingDiscreteSolver
+oldopts = simget(name);
 newopts = simset(oldopts, 'DstWorkspace', 'base'); % 'Solver', 'FixedStepDiscrete'); 
 %SIMULATE!
 sim(name, sim_time, newopts);
@@ -142,7 +137,7 @@ utlog(['getting data from ',name,'''s workspace'], {log_group});
 
 [data, result] = utoutport_desimify('ports', output_ports);
 if result ~= 0,
-  utlog(['error desimifying'],{log_group});
+  utlog(['error desimifying'],{'error', log_group});
   return;
 end %if
 
