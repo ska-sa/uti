@@ -216,7 +216,7 @@ for port_index = 1:len_ports,
         end
 
         %add To Workspace block 
-        tw_block = 'To Workspace';
+        tw_block = 'ToWorkspace';
         tw_src = ['built-in/', tw_block];
         tw_name = [var_name,'_tw'];
         utlog(['Adding ',tw_name,' at x = ',num2str(xoff_temp),', y = ',num2str(yoff_temp)], 'utoutport_weave_debug'); 
