@@ -61,21 +61,21 @@ defaults = { ...
     }, ... %block
   }, ... %bbox     
   'base_model', { ... %model to add black box to
-      'model', { ...
-        'name', 'generic_model', ...
-        'lines', {}, ...
-        'settings', {}, ...
-        'triggers', {}, ...
-        'blocks', { ...
-          ' System Generator' { ...
-            'name', ' System Generator', ...
-            'source', 'library', ...
-            'location', 'xbsIndex_r4/ System Generator', ...
-            'parameters', {}, ...
-            'position', [5 5 55 55], ... 
-          }, ... %system generator
-        }, ... %blocks
-      }, ... %model
+    'model', { ...
+      'name', 'generic_model', ...
+      'lines', {}, ...
+      'settings', {}, ...
+      'triggers', {}, ...
+      'blocks', { ...
+        ' System Generator' { ...
+          'name', ' System Generator', ...
+          'source', 'library', ...
+          'location', 'xbsIndex_r4/ System Generator', ...
+          'parameters', {}, ...
+          'position', [5 5 55 55], ... 
+        }, ... %system generator
+      }, ... %blocks
+    }, ... %model
   }, ... %base_model   
 }; %defaults
 args = {varargin{:}, 'defaults', defaults};
@@ -165,11 +165,20 @@ if ~isempty(inputs),
   inport = utinport_blockify('name', 'inputs', 'ports', in_ports, 'position', [xoff, yoff, xoff+block_width, yoff+(n_ports*port_depth)]);
 
   %add inport to model
-  model = utpar_insert({'inputs', inport}, {model, 'model', 'blocks'});
-
+  [model,result] = utpar_insert({'inputs', inport}, {model, 'model', 'blocks'});
+  if result ~= 0,
+    utlog('error inserting inports into model',{'error',log_group});
+    return;
+  end
+ 
   utlog(['inputs added to model framework'], {log_group});
 
-  lines = utpar_get({model, 'lines'});
+  [lines, temp, result] = utpar_get({model, 'model', 'lines'});
+  if result ~= 0,
+    utlog('error getting lines from model',{'error',log_group});
+    return;
+  end
+  
   %add appropriate lines or inputs
   for port_cnt = 1:n_inputs,
     line = {['inputs/',num2str(port_cnt)],[block_name,'/',num2str(port_cnt)]};
@@ -177,25 +186,29 @@ if ~isempty(inputs),
   end
 
   %overwrite lines in model with 
-%  model = utpar_set({model, 'model'}, {'lines', lines});
+  [model, result] = utpar_set({model, 'model'}, {'lines', lines});
+  if result ~= 0,
+    utlog('error overwriting lines in model',{'error',log_group});
+    return;
+  end
 
   utlog(['constructed lines for inputs'], {log_group});
 end
 
 %generate outport from outputs
 if ~isa(outputs,'cell'),
-  utlog('outputs must be a cell array');
+  utlog('outputs must be a cell array', {'error', log_group});
   return;
 end
 
 if ~isempty(outputs),
   outport = utoutport_blockify('name', 'outputs', 'ports', out_ports, 'position', [xoff+2*block_width+2*xinc, yoff, xoff+3*block_width+2*xinc, yoff+n_ports*port_depth]);
 
-  %add inport to model
+  %add outport to model
   [model,result] = utpar_insert({'outputs', outport}, {model, 'model', 'blocks'});
 
   if result ~= 0,
-    utlog('error adding outputs to blocks in model framework');
+    utlog('error adding outputs to blocks in model framework', {'error', log_group});
     return;
   end
 
