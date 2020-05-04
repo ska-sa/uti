@@ -1,0 +1,7 @@
+export UTI_PATH=/home/uti
+export MLIB_DEVEL_PATH=/home/mlib_devel
+export XILINX_PATH=/media/andrew/fast/xilinx/Vivado/2018.2
+export MATLAB_PATH=/media/andrew/fast/matlab
+export PLATFORM=lin64
+export JASPER_BACKEND=vivado
+ 
